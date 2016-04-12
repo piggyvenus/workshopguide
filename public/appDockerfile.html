@@ -1,0 +1,238 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>In this exercise we will show how to create a custom Dockerfile for nodejs and</title>
+
+</head>
+<body>
+<p>In this exercise we will show how to create a custom Dockerfile for nodejs and build/deploy applications.</p>
+
+<p><strong>Step 1: Create project</strong></p>
+
+<p>If you want to, you can create a new project based on what you have learnt in the previous lab. Since we already have a project we will use it. Run the following command to make sure.
+<strong>Remember</strong> to substitute UserName with your username.</p>
+
+<pre><code>$ oc new=-project &lt;nodeproj-username&gt;
+or 
+$ oc project &lt;any of your existing project&gt;
+</code></pre>
+
+<p><strong>Step 2: Create Dockerfile for your node.js application </strong></p>
+
+<ol>
+<li><p>We have prepared some files for your to start with. Run the following you will be able to get the artifacts.</p>
+
+<pre><code> git clone https://github.com/piggyvenus/nodejshelloworld.git
+</code></pre></li>
+<li>change directory to nodejshelloworld</li>
+<li>You can build with the existing Dockerfile. If you want to customize your own Dockerfile, you can use your own Dockerfile. The example docker file is using Node.js 5.7.1.</li>
+<li>(Optional step if docker is available on your local environment) To test the image before using it in OpenShift, we will build the image locally and make sure it works using the following steps:
+
+<ol type="a">
+<li>docker build -t my/app . (I used my/app for local build to test)</li>
+<li>docker run -p 18001:8080 -d my/app (I map the port to 18001 for testing. Any availible port on your local machine should work.)</li>
+<li>docker logs &lt;container_id for my/app></li>
+<li>curl -i localhost:18001</li>
+</ol>
+</li>
+<li><p>Once it is tested and your git repository has the latest files. Run the following:</p>
+
+<pre><code>  oc new-app https://github.com/piggyvenus/nodejshelloworld.git
+</code></pre></li>
+<li><p>Build should start soon, you can run the following commands to check status:</p>
+
+<pre><code> $oc status
+ $oc get builds
+ $oc logs build/&lt;name of your builds from above command&gt;
+ you will see the following from the logs.
+
+ Successfully built 6bd5db65d5a6
+ I0310 12:28:02.016145       1 docker.go:95] Pushing image 172.30.119.198:5000/  dockerfiletest/nodejshelloworld:latest ...
+ I0310 12:28:57.147757       1 docker.go:99] Push successful
+</code></pre></li>
+<li><p>Let's check if the application is running.</p>
+
+<pre><code> $oc get pods
+ $oc logs pod &lt;name of the pod&gt; 
+ $oc logs &lt;name of the pod&gt;
+ Running on http://localhost:8080
+ { http_parser: '2.6.2',
+   node: '5.7.1',
+   v8: '4.6.85.31',
+   uv: '1.8.0',
+   zlib: '1.2.8',
+   ares: '1.10.1-DEV',
+   icu: '56.1',
+   modules: '47',
+   openssl: '1.0.2g' }
+</code></pre></li>
+<li><p>Now, let's expose the application</p>
+
+<pre><code> $oc get dc
+ $oc expose dc &lt;name of your dc&gt; --port=8080
+ $oc get services
+ $oc expose svc &lt;name of your service&gt;
+ $oc get route
+ NAME               HOST/PORT                                              
+ nodejshelloworld   nodejshelloworld-dockerfiletest.cloudapps.example.com                                
+</code></pre></li>
+<li><p>Copy the value under HOST/PORT for your application onto browswer</p>
+
+<pre><code> $curl nodejshelloworld-dockerfiletest.cloudapps.example.com
+ Hello world openshift v3!
+</code></pre></li>
+</ol>
+
+</body>
+</html>

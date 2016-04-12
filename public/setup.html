@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>In this Lab we will look at how to install the OpenShift CLI tools.
+
+**Installing</title>
+
+</head>
+<body>
+<p>In this Lab we will look at how to install the OpenShift CLI tools.</p>
+
+<p><strong>Installing the Command-line Tools</strong></p>
+
+<p>After completing this section, you should be able to:</p>
+
+<ul>
+<li>Locate the binaries for the OpenShift Enterprise command-line interface
+(OSE CLI)</li>
+<li>Install the OSE CLI tools.</li>
+<li>CLI basic configuration</li>
+</ul>
+
+
+<p><strong>Locating the binaries</strong></p>
+
+<p>The OSE CLI exposes commands for managing applications, as well as lower-level
+tools to interact with each component of a system. The binaries for Mac, Windows,
+and Linux are available for download from the Red Hat Customer Portal via the
+following link:</p>
+
+<p>Portal https://access.redhat.com/downloads/content/290</p>
+
+<p><strong>Installing the CLI tools</strong></p>
+
+<p>The CLI is provided as compressed files that can be decompressed to any
+directory. In order to make it simple for any user to access the OSE CLI, it is
+recommended that it is made available in a directory mapped to the environment
+variable called PATH from the OS.</p>
+
+<ul>
+<li>OSX and Linux:</li>
+</ul>
+
+
+<p>Copy the binary to the /usr/local/bin directory.</p>
+
+<ul>
+<li>Windows:</li>
+</ul>
+
+
+<p>a) Use oc.exe to open an OpenShift shell.
+If you getting error from running oc, go to git-scm.com to download git bash for Windows (during installation you need to specify in the selection to integrate with the command prompt)</p>
+
+<p>b) Download and install Notepad++ and install the JSON plugin or use
+   http://jsonlint.com/ to edit and validate JSON.</p>
+
+<p>  http://ammonsonline.com/formatted-json-in-notepad/</p>
+
+<p>c) Configure your default editor to be Notepad++</p>
+
+<p><strong>CLI basic configuration</strong></p>
+
+<p>The easiest way to initially setup the OpenShift CLI is to use the "oc login"
+command. It'll interactively ask you a server URL, username and password. The
+information is automatically saved in a CLI configuration file that is then used
+for subsequent commands.</p>
+
+<p>To login to a remote server use:</p>
+
+<pre><code>oc login &lt;hostname&gt;:&lt;port&gt;
+</code></pre>
+</body>
+</html>
