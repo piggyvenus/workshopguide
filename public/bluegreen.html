@@ -1,338 +1,164 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<style>
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote {
-    margin: 0;
-    padding: 0;
-}
-body {
-    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
-    font-size: 13px;
-    line-height: 18px;
-    color: #737373;
-    background-color: white;
-    margin: 10px 13px 10px 13px;
-}
-table {
-	margin: 10px 0 15px 0;
-	border-collapse: collapse;
-}
-td,th {	
-	border: 1px solid #ddd;
-	padding: 3px 10px;
-}
-th {
-	padding: 5px 10px;	
-}
+<title>OpenShift 3 Workshop</title>
 
-a {
-    color: #0069d6;
-}
-a:hover {
-    color: #0050a3;
-    text-decoration: none;
-}
-a img {
-    border: none;
-}
-p {
-    margin-bottom: 9px;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: #404040;
-    line-height: 36px;
-}
-h1 {
-    margin-bottom: 18px;
-    font-size: 30px;
-}
-h2 {
-    font-size: 24px;
-}
-h3 {
-    font-size: 18px;
-}
-h4 {
-    font-size: 16px;
-}
-h5 {
-    font-size: 14px;
-}
-h6 {
-    font-size: 13px;
-}
-hr {
-    margin: 0 0 19px;
-    border: 0;
-    border-bottom: 1px solid #ccc;
-}
-blockquote {
-    padding: 13px 13px 21px 15px;
-    margin-bottom: 18px;
-    font-family:georgia,serif;
-    font-style: italic;
-}
-blockquote:before {
-    content:"\201C";
-    font-size:40px;
-    margin-left:-10px;
-    font-family:georgia,serif;
-    color:#eee;
-}
-blockquote p {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 18px;
-    margin-bottom: 0;
-    font-style: italic;
-}
-code, pre {
-    font-family: Monaco, Andale Mono, Courier New, monospace;
-}
-code {
-    background-color: #fee9cc;
-    color: rgba(0, 0, 0, 0.75);
-    padding: 1px 3px;
-    font-size: 12px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-}
-pre {
-    display: block;
-    padding: 14px;
-    margin: 0 0 18px;
-    line-height: 16px;
-    font-size: 11px;
-    border: 1px solid #d9d9d9;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-pre code {
-    background-color: #fff;
-    color:#737373;
-    font-size: 11px;
-    padding: 0;
-}
-sup {
-    font-size: 0.83em;
-    vertical-align: super;
-    line-height: 0;
-}
-* {
-	-webkit-print-color-adjust: exact;
-}
-@media screen and (min-width: 914px) {
-    body {
-        width: 854px;
-        margin:10px auto;
-    }
-}
-@media print {
-	body,code,pre code,h1,h2,h3,h4,h5,h6 {
-		color: black;
-	}
-	table, pre {
-		page-break-inside: avoid;
-	}
-}
-</style>
-<title>Part I</title>
+<xmp style="display:none;">
 
-</head>
-<body>
-<p>The purpose of this short lab is to demonstrate how simple it is to implement
-Blue-Green Deployments in OpenShift v3.</p>
+#** Lab 3: Blue Grenn Deployments**
+The purpose of this short lab is to demonstrate how simple it is to implement
+Blue-Green Deployments in OpenShift v3.
 
-<p>"<em>Blue-green deployment is a release strategy that can be utilized by developers
+"*Blue-green deployment is a release strategy that can be utilized by developers
 for deploying software in a production environment. Blue can be one particular
 production environment whereas green can define an identical production
 environment. Under blue-green deployment strategy, software developers are able
-to minimize downtime and reduce risk.</em>" <a href="https://en.wikipedia.org/wiki/User:Nuqing/Blue-green_deployment">1*</a></p>
+to minimize downtime and reduce risk.*" [1*](https://en.wikipedia.org/wiki/User:Nuqing/Blue-green_deployment)
 
-<p>In this Lab, we will be:</p>
+In this Lab, we will be:
 
-<ul>
-<li>Deploying two versions of the same application. The first version will display a blue rectangle.</li>
-<li>Create a FQDN that can be used to expose the applications.</li>
-<li>We will first expose the first application.</li>
-<li>We will also create another version of this application in the same project that displays a green rectangle.</li>
-<li>We will then switch the FQDN to from the first application (blue) to the second application (green)</li>
-</ul>
+- Deploying two versions of the same application. The first version will display a blue rectangle. 
+- Create a FQDN that can be used to expose the applications.
+- We will first expose the first application.
+- We will also create another version of this application in the same project that displays a green rectangle. 
+- We will then switch the FQDN to from the first application (blue) to the second application (green)
 
+![Webhook](/blue_green_deployment.png)
 
-<p><img src="images/blue_green_deployment.png" alt="image" /></p>
+## Part I
 
-<h2>Part I</h2>
+**Step 1: Create a new project**
 
-<p><strong>Step 1: Create a new project</strong></p>
+**Remember** to substitute the username
 
-<p><strong>Remember</strong> to substitute the username</p>
+```
+oc new-project bluegreen-UserName --display-name="Blue Green Project" --description="Blue Green Project"
+```
 
-<pre><code>oc new-project bluegreen-UserName --display-name="Blue Green Project" --description="Blue Green Project"
-</code></pre>
+**Step 2: List existing image builder or image streams**
 
-<p><strong>Step 2: List existing image builder or image streams</strong></p>
+```
+oc new-app -S --image=php
+```
 
-<pre><code>oc new-app -S --image=php
-</code></pre>
+**Step 3: Create an application**
 
-<p><strong>Step 3: Create an application</strong></p>
-
-<p>We will be using a sample application that displays a blue or green rectangle.
+We will be using a sample application that displays a blue or green rectangle. 
 The sample app can be browsed in https://github.com/VeerMuchandi/bluegreen.git.
 The important file and where the small change will take place is:
-https://github.com/VeerMuchandi/bluegreen/blob/master/image.php.</p>
+https://github.com/VeerMuchandi/bluegreen/blob/master/image.php.
 
-<p>Please fork this github repo <code>https://github.com/VeerMuchandi/bluegreen.git</code> into your own github. In the command below, <strong>substitute the github url with your own and check the imagefilledrectangle should be set to blue in image.php </strong>.</p>
+Please fork this github repo `https://github.com/VeerMuchandi/bluegreen.git` into your own github. In the command below, **substitute the github url with your own and check the imagefilledrectangle should be set to blue in image.php **.
 
-<pre><code>oc new-app --image-stream=php --code=https://github.com/GitUserName/bluegreen.git --name=blue
-</code></pre>
+```
+oc new-app --image-stream=php --code=https://github.com/GitUserName/bluegreen.git --name=blue
+```
 
-<p><strong>Step 4: Monitor the application build</strong></p>
+**Step 4: Monitor the application build**
 
-<pre><code>oc get builds
-</code></pre>
+```
+oc get builds
+```
 
-<ul>
-<li>Using the build name of the recently created application run:</li>
-</ul>
+- Using the build name of the recently created application run:
 
-
-<pre><code>oc build-logs "your-build-name"
+```
+oc build-logs "your-build-name"
 or 
 oc logs build/"your-build-name"
-</code></pre>
+```
 
-<ul>
-<li>Once the build finishes you should see something similar to:</li>
-</ul>
+- Once the build finishes you should see something similar to:
 
+Successfully pushed 172.30.120.13:5000/bluegreen/green:latest
 
-<p>Successfully pushed 172.30.120.13:5000/bluegreen/green:latest</p>
+**Step 5: Check application deployment status**
 
-<p><strong>Step 5: Check application deployment status</strong></p>
-
-<pre><code>oc get pods
+```
+oc get pods
 NAME           READY     STATUS       RESTARTS   AGE
 blue-1-build   0/1       Completed   0          4m
 blue-1-ruyrt   1/1       Running      0          19s
-</code></pre>
+```
 
-<ul>
-<li>Notice that the build pod has exited and you now have a single instance of the
-application running under one single pod.</li>
-</ul>
+- Notice that the build pod has exited and you now have a single instance of the
+application running under one single pod.
 
+**Step 6: List the service**
 
-<p><strong>Step 6: List the service</strong></p>
+```
+oc get service
+```
 
-<pre><code>oc get service
-</code></pre>
+**Step 7: Create a route for the application**
 
-<p><strong>Step 7: Create a route for the application</strong></p>
+**Remember** to substitute the username
 
-<p><strong>Remember</strong> to substitute the username</p>
+```
+oc expose service blue --hostname=bluegreen.UserName.apps.osecloud.com --name=bluegreen
+```
 
-<pre><code>oc expose service blue --hostname=bluegreen.UserName.apps.osecloud.com --name=bluegreen
-</code></pre>
+**Step 8: Test the application**
 
-<p><strong>Step 8: Test the application</strong></p>
+```
+oc get route
+```
 
-<pre><code>oc get route
-</code></pre>
+- Copy the HOST/PORT and paste it in your browser. You should see something similar
+to:
 
-<ul>
-<li>Copy the HOST/PORT and paste it in your browser. You should see something similar
-to:</li>
-</ul>
+![Webhook](/blue_deployment.jpeg)
 
+- At this point you have deployed an application that displays for illustration
+purposes a blue rectangle for version 1.
 
-<p><img src="images/blue_deployment.jpeg" alt="image" /></p>
+## Part II
 
-<ul>
-<li>At this point you have deployed an application that displays for illustration
-purposes a blue rectangle for version 1.</li>
-</ul>
+In this part, we will:
 
+- Deploy a new version of this application (Same one as before with a very small change)
 
-<h2>Part II</h2>
-
-<p>In this part, we will:</p>
-
-<ul>
-<li><p>Deploy a new version of this application (Same one as before with a very small change)</p></li>
-<li><p>Point the previously created FQDN (route) to the new service that will be created
-as part of the new application creation process.</p></li>
-</ul>
+- Point the previously created FQDN (route) to the new service that will be created
+as part of the new application creation process.
 
 
-<p><img src="images/blue_green_active_green.png" alt="image" /></p>
+![Webhook](/blue_green_active_green.png)
 
-<p><strong>Step 1: Create new version of the application</strong></p>
+**Step 1: Create new version of the application**
 
-<ul>
-<li>Edit the following file in your forked repo:</li>
-</ul>
+- Edit the following file in your forked repo:
 
+https://github.com/GitUserName/bluegreen/blob/master/image.php
 
-<p>https://github.com/GitUserName/bluegreen/blob/master/image.php</p>
+- Comment line that creates blue rectangle and uncomment the line that creates green rectangle as below
 
-<ul>
-<li>Comment line that creates blue rectangle and uncomment the line that creates green rectangle as below</li>
-</ul>
-
-
-<pre><code>// Draw a filled rectangle
+````
+// Draw a filled rectangle
 //imagefilledrectangle($im, 0, 0, 199, 199, $blue);
 imagefilledrectangle($im, 0, 0, 199, 199, $green);
-</code></pre>
 
-<ul>
-<li>Save/Commit the file.</li>
-</ul>
+````
 
+- Save/Commit the file.
 
-<p><strong>Step 2: Deploy the new version of the application</strong></p>
+**Step 2: Deploy the new version of the application**
 
-<ul>
-<li>Repeat steps 3 through 6 from Part I. Make sure to name the application as 'green'
-this time.</li>
-</ul>
+- Repeat steps 3 through 6 from Part I. Make sure to name the application as 'green'
+this time. 
 
+````
+oc new-app --image-stream=php --code=https://github.com/GitUserName/bluegreen.git --name=green
+````
 
-<pre><code>oc new-app --image-stream=php --code=https://github.com/GitUserName/bluegreen.git --name=green
-</code></pre>
+- Wait until the application is built and deployed. You should now see two services if you run:
 
-<ul>
-<li>Wait until the application is built and deployed. You should now see two services if you run:</li>
-</ul>
+```
+oc get service
+```
 
+- Edit the previously created route and change the service name (from blue to green), all the way at the bottom to the new service that was just created. You are essentially still using the FQDN you had previously created. However, that route will now point to a different (green) service.
 
-<pre><code>oc get service
-</code></pre>
-
-<ul>
-<li>Edit the previously created route and change the service name (from blue to green), all the way at the bottom to the new service that was just created. You are essentially still using the FQDN you had previously created. However, that route will now point to a different (green) service.</li>
-</ul>
-
-
-<pre><code>oc edit route bluegreen
+```
+oc edit route bluegreen
 
 apiVersion: v1
 kind: Route
@@ -353,28 +179,31 @@ spec:
     kind: Service
     name: green
 status: {}
-</code></pre>
+```
 
-<p><strong>Step 3: Test the application</strong></p>
+**Step 3: Test the application**
 
-<pre><code>oc get route
-</code></pre>
+```
+oc get route
+```
 
-<ul>
-<li><p>Copy the HOST/PORT and paste it in your browser.</p></li>
-<li><p>You should now see the new version of the recently deployed application.</p></li>
-</ul>
+- Copy the HOST/PORT and paste it in your browser.
+
+- You should now see the new version of the recently deployed application.
+
+## Summary
+
+- Blue-Green deployments can be easily accomplished in OpenShift v3.
+
+- We have shown multiple versions of an application; all running concurrently,
+each with a unique service.
+
+- All that is needed to expose any of the applications is to change the service
+being used by the route to publicly advertise the application.
+
+**End of Lab 3**
 
 
-<h2>Summary</h2>
+</xmp>
 
-<ul>
-<li><p>Blue-Green deployments can be easily accomplished in OpenShift v3.</p></li>
-<li><p>We have shown multiple versions of an application; all running concurrently,
-each with a unique service.</p></li>
-<li><p>All that is needed to expose any of the applications is to change the service
-being used by the route to publicly advertise the application.</p></li>
-</ul>
-
-</body>
-</html>
+<script src="http://training.runcloudrun.com/v/0.2/strapdown.js"></script>

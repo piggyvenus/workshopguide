@@ -1,219 +1,68 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<style>
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote {
-    margin: 0;
-    padding: 0;
-}
-body {
-    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
-    font-size: 13px;
-    line-height: 18px;
-    color: #737373;
-    background-color: white;
-    margin: 10px 13px 10px 13px;
-}
-table {
-	margin: 10px 0 15px 0;
-	border-collapse: collapse;
-}
-td,th {	
-	border: 1px solid #ddd;
-	padding: 3px 10px;
-}
-th {
-	padding: 5px 10px;	
-}
+<title>OpenShift 3 Workshop</title>
 
-a {
-    color: #0069d6;
-}
-a:hover {
-    color: #0050a3;
-    text-decoration: none;
-}
-a img {
-    border: none;
-}
-p {
-    margin-bottom: 9px;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: #404040;
-    line-height: 36px;
-}
-h1 {
-    margin-bottom: 18px;
-    font-size: 30px;
-}
-h2 {
-    font-size: 24px;
-}
-h3 {
-    font-size: 18px;
-}
-h4 {
-    font-size: 16px;
-}
-h5 {
-    font-size: 14px;
-}
-h6 {
-    font-size: 13px;
-}
-hr {
-    margin: 0 0 19px;
-    border: 0;
-    border-bottom: 1px solid #ccc;
-}
-blockquote {
-    padding: 13px 13px 21px 15px;
-    margin-bottom: 18px;
-    font-family:georgia,serif;
-    font-style: italic;
-}
-blockquote:before {
-    content:"\201C";
-    font-size:40px;
-    margin-left:-10px;
-    font-family:georgia,serif;
-    color:#eee;
-}
-blockquote p {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 18px;
-    margin-bottom: 0;
-    font-style: italic;
-}
-code, pre {
-    font-family: Monaco, Andale Mono, Courier New, monospace;
-}
-code {
-    background-color: #fee9cc;
-    color: rgba(0, 0, 0, 0.75);
-    padding: 1px 3px;
-    font-size: 12px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-}
-pre {
-    display: block;
-    padding: 14px;
-    margin: 0 0 18px;
-    line-height: 16px;
-    font-size: 11px;
-    border: 1px solid #d9d9d9;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-pre code {
-    background-color: #fff;
-    color:#737373;
-    font-size: 11px;
-    padding: 0;
-}
-sup {
-    font-size: 0.83em;
-    vertical-align: super;
-    line-height: 0;
-}
-* {
-	-webkit-print-color-adjust: exact;
-}
-@media screen and (min-width: 914px) {
-    body {
-        width: 854px;
-        margin:10px auto;
-    }
-}
-@media print {
-	body,code,pre code,h1,h2,h3,h4,h5,h6 {
-		color: black;
-	}
-	table, pre {
-		page-break-inside: avoid;
-	}
-}
-</style>
-<title>In the past you have seen how OpenShift can take your existing java code, build</title>
+<xmp style="display:none;">
 
-</head>
-<body>
-<p>In the past you have seen how OpenShift can take your existing java code, build it and deploy the resultant docker image as an application. OpenShift S2I process includes an assemble script that copies the source code from a git repository,  invokes a maven build, places the resultant war file in the deployments folder, builds a new application image and pushes that image into the registry. But how about if you want OpenShift to deploy a war file that you built yourself?</p>
+#** Lab 2: Binary Deployment of a war file**
 
-<p>In this exercise you will learn to deploy a war file. We will assume that you built your source code outside of OpenShift build process and checked in a war file into a repository, perhaps your artifact repo.</p>
 
-<p>OpenShift allows you to customize the assemble script. For this lab, we customized this assemble script to pull the war file from a location of your choice by supplying a WAR_FILE_URL. As long as the builder pod has access to pull it from this location it will pull the war file,  place it in the deployments folder and build the application image. In this lab, we will use petstore application war file as an example.</p>
+In the past you have seen how OpenShift can take your existing java code, build it and deploy the resultant docker image as an application. OpenShift S2I process includes an assemble script that copies the source code from a git repository,  invokes a maven build, places the resultant war file in the deployments folder, builds a new application image and pushes that image into the registry. But how about if you want OpenShift to deploy a war file that you built yourself?
 
-<p>Look at the customization to the assemble script for EAP <a href="https://github.com/VeerMuchandi/eap6-bin-deploy/tree/master/.sti/bin">here</a></p>
+In this exercise you will learn to deploy a war file. We will assume that you built your source code outside of OpenShift build process and checked in a war file into a repository, perhaps your artifact repo. 
 
-<pre><code>curl -o ${DEPLOY_DIR}/ROOT.war -O ${WAR_FILE_URL}
-</code></pre>
+OpenShift allows you to customize the assemble script. For this lab, we customized this assemble script to pull the war file from a location of your choice by supplying a WAR_FILE_URL. As long as the builder pod has access to pull it from this location it will pull the war file,  place it in the deployments folder and build the application image. In this lab, we will use petstore application war file as an example. 
 
-<p>We added the above that copies the code to the deployment directory. This customized assemble script is placed in a .sti/bin folder in the git repository. Since you don't have any source code to deploy we will create an application using this empty repository that just has this customized script.</p>
+Look at the customization to the assemble script for EAP [here](https://github.com/VeerMuchandi/eap6-bin-deploy/tree/master/.sti/bin) 
 
-<p><strong>Step 1: Create a new project</strong>
-Create a new project based on what you learnt in the earlier exercises. Name the project "bindep-UserName" (substitute UserName), display name "Binary Deployment" and description "My project to test Binary Deployment".</p>
+```
+curl -o ${DEPLOY_DIR}/ROOT.war -O ${WAR_FILE_URL}
+```
 
-<p><strong>Step 2: Add an environment variable WAR_LOCATION</strong></p>
+We added the above that copies the code to the deployment directory. This customized assemble script is placed in a .sti/bin folder in the git repository. Since you don't have any source code to deploy we will create an application using this empty repository that just has this customized script.
 
-<pre><code>export WAR_LOCATION=https://raw.githubusercontent.com/VeerMuchandi/ps/master/deployments/ROOT.war
-</code></pre>
+**Step 1: Create a new project**
+Create a new project based on what you learnt in the earlier exercises. Name the project "bindep-UserName" (substitute UserName), display name "Binary Deployment" and description "My project to test Binary Deployment".
 
-<p>You can <code>echo $WAR_LOCATION</code> to confirm that the variable is set to appropriate value. The URL here points to petstore war file. This can be any working war file.</p>
+**Step 2: Add an environment variable WAR_LOCATION**
 
-<p><strong>Step 3: Deploy a JBossEWS application using the customized repository</strong></p>
+```
+export WAR_LOCATION=https://raw.githubusercontent.com/VeerMuchandi/ps/master/deployments/ROOT.war
+```
+You can `echo $WAR_LOCATION` to confirm that the variable is set to appropriate value. The URL here points to petstore war file. This can be any working war file.
 
-<p>Windows users keep reading. The command below may not work for you.</p>
+**Step 3: Deploy a JBossEWS application using the customized repository**
 
-<pre><code>$ oc new-app jboss-webserver30-tomcat8-openshift~https://github.com/VeerMuchandi/ews-bin-deploy.git --name=petstore -o yaml | sed -e "/sourceStrategy/a \\
+Windows users keep reading. The command below may not work for you.
+
+```
+$ oc new-app jboss-webserver30-tomcat8-openshift~https://github.com/VeerMuchandi/ews-bin-deploy.git --name=petstore -o yaml | sed -e "/sourceStrategy/a \\
 \ \ \ \ \ \ \ \ env:\\
 \ \ \ \ \ \ \ \ - name: WAR_FILE_URL\\
 \ \ \ \ \ \ \ \ \ \ value: $WAR_LOCATION" | oc create -f -
-</code></pre>
+```
 
-<p>Copy paste the above command.</p>
+Copy paste the above command. 
 
-<p>We are doing a few things in the above command to condense the number of steps. We cover them in more details below:</p>
+We are doing a few things in the above command to condense the number of steps. We cover them in more details below:
+ 
+1. We are running a command that can create an application using `jboss-webserver30-tomcat8-openshift` imagestream
+2. This application will be created based on the git repository that holds the custom assemble script `https://github.com/VeerMuchandi/ews-bin-deploy.git`
+3. The name of this application will be `petstore`
+4. `-o yaml` will produce a yaml output for the command we are running. So instead of creating an application directly we are interested in the yaml output of this new-app command
+5. We want to edit this yaml output to add a variable to the buildConfig. The `sed` command will add an environment variable WAR_FILE_URL and set its value to based on the `WAR_LOCATION` variable we created in the previous step. Note that it adds the required number of leading spaces on each line (this is very important in a yaml). 
+6. The output after the edits is being passed into `oc create -f -` command that will create the application based on the input piped to it.
+If you are interested in step by step approach of how this is done, please refer this blog (https://blog.openshift.com/binary-deployments-openshift-3/).
 
-<ol>
-<li>We are running a command that can create an application using <code>jboss-webserver30-tomcat8-openshift</code> imagestream</li>
-<li>This application will be created based on the git repository that holds the custom assemble script <code>https://github.com/VeerMuchandi/ews-bin-deploy.git</code></li>
-<li>The name of this application will be <code>petstore</code></li>
-<li><code>-o yaml</code> will produce a yaml output for the command we are running. So instead of creating an application directly we are interested in the yaml output of this new-app command</li>
-<li>We want to edit this yaml output to add a variable to the buildConfig. The <code>sed</code> command will add an environment variable WAR_FILE_URL and set its value to based on the <code>WAR_LOCATION</code> variable we created in the previous step. Note that it adds the required number of leading spaces on each line (this is very important in a yaml).</li>
-<li>The output after the edits is being passed into <code>oc create -f -</code> command that will create the application based on the input piped to it.
-If you are interested in step by step approach of how this is done, please refer this blog (https://blog.openshift.com/binary-deployments-openshift-3/).</li>
-</ol>
+ 
+Within a few minutes you will see that the application named petstore will be built and deployed.
 
+Windows users may have challenge with the above step as 'sed' may not be available on their box. So use the following instead:
 
-<p>Within a few minutes you will see that the application named petstore will be built and deployed.</p>
+- Create the application
 
-<p>Windows users may have challenge with the above step as 'sed' may not be available on their box. So use the following instead:</p>
-
-<ul>
-<li>Create the application</li>
-</ul>
-
-
-<pre><code>$ oc new-app jboss-webserver30-tomcat8-openshift~https://github.com/VeerMuchandi/ews-bin-deploy.git --name=petstore
+````
+$ oc new-app jboss-webserver30-tomcat8-openshift~https://github.com/VeerMuchandi/ews-bin-deploy.git --name=petstore
 
 imagestreams/petstore
 
@@ -225,56 +74,64 @@ services/petstore
 
 A build was created - you can run `oc start-build petstore` to start it.
 
-Service "petstore" created at 172.30.76.144 with port mappings 8080-&gt;8080, 8443-&gt;8443.
-</code></pre>
+Service "petstore" created at 172.30.76.144 with port mappings 8080->8080, 8443->8443.
+````
+Note that this step created a build configuration with name petstore. You can view this build configuration using ```oc get bc -o json ``` command.
 
-<p>Note that this step created a build configuration with name petstore. You can view this build configuration using <code>oc get bc -o json</code> command.</p>
+- Cancel the build that is running
 
-<ul>
-<li>Cancel the build that is running</li>
-</ul>
+You will notice that OpenShift immediately starts a build. ```oc get builds``` will show you the running build. It would have the name ```petstore-1``` Just go ahead and cancel the running build by running the following command. 
 
+````
+$ oc cancel-build petstore-1
+````
 
-<p>You will notice that OpenShift immediately starts a build. <code>oc get builds</code> will show you the running build. It would have the name <code>petstore-1</code> Just go ahead and cancel the running build by running the following command.</p>
+If the build is already complete, just ignore it.
 
-<pre><code>$ oc cancel-build petstore-1
-</code></pre>
+- Now, let us start a new build by passing the environment variable for the WAR_FILE_URL
 
-<p>If the build is already complete, just ignore it.</p>
-
-<ul>
-<li>Now, let us start a new build by passing the environment variable for the WAR_FILE_URL</li>
-</ul>
-
-
-<pre><code>$ oc start-build petstore --env WAR_FILE_URL=https://raw.githubusercontent.com/VeerMuchandi/ps/master/deployments/ROOT.war
+````
+$ oc start-build petstore --env WAR_FILE_URL=https://raw.githubusercontent.com/VeerMuchandi/ps/master/deployments/ROOT.war
 
 petstore-2
-</code></pre>
+````
 
-<p><strong>Step 4: Create a route</strong></p>
 
-<p>The previous step would have created a service with name <code>petstore</code>. Confirm by running the following command.</p>
+**Step 4: Create a route**
 
-<pre><code>oc get service
-</code></pre>
+The previous step would have created a service with name `petstore`. Confirm by running the following command.
 
-<p>Now let us create a route by exposing this service. Substitute the username and domain name given to you remove angle brackets (&lt; >)</p>
+```
+oc get service
+```
 
-<pre><code>oc expose service petstore 
-</code></pre>
+Now let us create a route by exposing this service. Substitute the username and domain name given to you remove angle brackets (< >) 
 
-<p><strong>Step 5: Run the application</strong>
-Confirm that your application pod is running.</p>
+```
+oc expose service petstore 
+```
 
-<p>Invoke your application URL in the browser and you should see the all time favorite petstore application. You can initialize the database and start shopping your favorite pets.</p>
+**Step 5: Run the application**
+Confirm that your application pod is running. 
 
-<p><strong>Tip:</strong>  If your application is not ready yet, you can use <code>oc logs build/petstore-1</code> to look at the build logs
-<code>oc get pods</code> to get the list of pods. You should see a build pod (such as petstore-1-build) that is complete with Exit Code:0.
-If the application is still getting deployed a deployer pod (example petstore-1-deploy) might be still running.</p>
+Invoke your application URL in the browser and you should see the all time favorite petstore application. You can initialize the database and start shopping your favorite pets.
 
-<p>Also note that once the pod starts running it may take a few minutes for the webserver to start up inside the pod and deploy the ROOT.war file. Please be patient. You can confirm that the server is up and war file is deployed by running <code>oc logs</code> on the pod.</p>
+**Tip:**  If your application is not ready yet, you can use `oc logs build/petstore-1` to look at the build logs 
+`oc get pods` to get the list of pods. You should see a build pod (such as petstore-1-build) that is complete with Exit Code:0. 
+If the application is still getting deployed a deployer pod (example petstore-1-deploy) might be still running. 
 
-<p>Congratulations! In this lab exercise you have learnt how to deploy a war file as an application in OpenShift.</p>
-</body>
-</html>
+Also note that once the pod starts running it may take a few minutes for the webserver to start up inside the pod and deploy the ROOT.war file. Please be patient. You can confirm that the server is up and war file is deployed by running ```oc logs``` on the pod.
+
+
+Congratulations! In this lab exercise you have learnt how to deploy a war file as an application in OpenShift.
+
+**End of Lab 2**
+
+
+</xmp>
+
+<script src="http://training.runcloudrun.com/v/0.2/strapdown.js"></script>
+
+
+
+
