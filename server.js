@@ -6,7 +6,7 @@ var app = express();
 
 app.use(express.static(__dirname + '/public'));
 
-var public_dir = './public';
+var public_dir = './public/';
 
 app.get('/setup', function(req,res){
 	res.sendfile(public_dir + 'setup.html')
