@@ -61,4 +61,8 @@ app.get('/blue_green_active_green', function(req,res){
 	res.sendfile(images_dir + 'blue_green_active_green.png')
 });
 
+app.get('/map_lab5', function(req,res){
+	res.sendfile(images_dir + 'map_lab5.jpg')
+});
+
 app.listen(8080, function() { console.log('listening')});
