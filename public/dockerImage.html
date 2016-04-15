@@ -28,16 +28,15 @@ server. Examples of containers you might put in a *Pod* are, an Apache HTTPD
 server, a log analyzer, and a file service to help manage uploaded files.
 
 Let's look at the *Pod*s that were deployed as part of the *smoke* application in
-the *userXX-smoke* Project.
+the *userXX-shell* Project.
 
-	$ oc get pods
+    $ oc get pods
     
 You should see output similar to the following:
 
     NAME            READY     REASON       RESTARTS   AGE
-    smoke-1-32gkx   1/1       Running      0          11m
-    smoke-1-build   0/1       ExitCode:0   0          15m
-    smoke-1-fsghf   1/1       Running      0          8m
+    shell-1-gq9wi   1/1       Running      0          25m
+
 
 The above output lists all of the *Pod*s in the current Project, including the *Pod*
 name, state, restarts, and uptime for the *Pod*.  Once you have a *Pod*'s name, you
@@ -47,26 +46,26 @@ following syntax:
 
 **Note:** Make sure you use the correct *Pod* name from your output.
 
-	$  oc get pod smoke-1-32gkx -o json
+	$  oc get pod shell-1-gq9wi -o json
     
 You should see something like the following output (which is have truncated due
 to space considerations of this workshop manual):
 
     {
-        "kind": "Pod",
-        "apiVersion": "v1",
-        "metadata": {
-            "name": "smoke-1-aeckb",
-            "generateName": "smoke-1-",
-            "namespace": "userXX-smoke",
-            "selfLink": "/api/v1/namespaces/userXX-smoke/pods/smoke-1-aeckb",
-            "uid": "52de4f3a-9db8-11e5-911b-06ce56ac1643",
-            "resourceVersion": "35328",
-            "creationTimestamp": "2015-12-08T14:31:09Z",
-            "labels": {
-                "app": "smoke",
-                "deployment": "smoke-1",
-                "deploymentconfig": "smoke"
+    "kind": "Pod",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "shell-1-gq9wi",
+        "generateName": "shell-1-",
+        "namespace": "user25-shell",
+        "selfLink": "/api/v1/namespaces/user25-shell/pods/shell-1-gq9wi",
+        "uid": "6fdd7391-02ca-11e6-80f4-06215c647bbb",
+        "resourceVersion": "146535",
+        "creationTimestamp": "2016-04-15T05:25:16Z",
+        "labels": {
+            "app": "shell",
+            "deployment": "shell-1",
+            "deploymentconfig": "shell"
             },...............
             
 ###** Exercise 1: Deploying your first Image **
