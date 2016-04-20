@@ -63,8 +63,6 @@ oc get builds
 - Using the build name of the recently created application run:
 
 ```
-oc build-logs "your-build-name"
-or 
 oc logs build/"your-build-name"
 ```
 
@@ -95,7 +93,7 @@ oc get service
 **Remember** to substitute the username
 
 ```
-oc expose service blue --hostname=bluegreen.UserName..apps.workshop.ck.osecloud.com --name=bluegreen
+oc expose service blue --hostname=bluegreen.UserName.apps.sc.workshop.chan-shanna.com --name=bluegreen
 ```
 
 **Step 8: Test the application**
@@ -159,7 +157,7 @@ oc get service
 - Edit the previously created route and change the service name (from blue to green), all the way at the bottom to the new service that was just created. You are essentially still using the FQDN you had previously created. However, that route will now point to a different (green) service.
 
 ```
-oc edit route bluegreen
+$oc edit route bluegreen
 
 apiVersion: v1
 kind: Route
@@ -173,7 +171,7 @@ metadata:
   selfLink: /oapi/v1/namespaces/bluegreen-userxx/routes/bluegreen
   uid: 80829b59-a8e0-11e5-be21-fa163ec58dad
 spec:
-  host: bluegreen.userxx..apps.workshop.ck.osecloud.com
+  host: bluegreen.userxx.apps.sc.workshop.chan-shanna.com
   port:
     targetPort: "8080"
   to:

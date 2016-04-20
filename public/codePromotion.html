@@ -47,6 +47,7 @@ myapp     172.30.47.239:5000/development-UserName/myapp   latest    12 seconds a
 
 Now describe this image stream to get the full image id and repeat the command until you see the Tag Spec shows as below.
 
+
 ````
 $ oc describe is myapp
 Name:               myapp
@@ -59,7 +60,16 @@ Docker Pull Spec:   172.30.226.0:5000/development-UserName/myapp
 Tag Spec        Created     PullSpec                                                        Image
 latest  <pushed>    9 minutes ago   172.30.226.0:5000/development-UserName/myapp@sha256:7d0a5e0bbb0be497db86e2cac4f3ba47b5a6fa0d1a4e1529724ec1b21042e1f4    
 ````
-In this case, the full image Id is '172.30.226.0:5000/development-UserName/myapp@sha256:7d0a5e0bbb0be497db86e2cac4f3ba47b5a6fa0d1a4e1529724ec1b21042e1f4'
+You can watch the build by doing the following:
+
+````
+$oc get builds
+$oc logs build/myapp-1
+
+````
+
+
+In this case, the full image Id is ':pdevelopment-UserName/myapp@sha256:7d0a5e0bbb0be497db86e2cac4f3ba47b5a6fa0d1a4e1529724ec1b21042e1f4'
 
 Now let us assume that this docker image is good and is ready to promote to QA. Let us tag this docker image using the `oc tag` command.
 
