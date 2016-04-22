@@ -122,7 +122,7 @@ However note that if you change the `deploymentConfig` it applies to your applic
 To scale your application we will edit the `deploymentConfig` to 3.
 
 First; open your brower to the Overview page and note you only have one instance running.
-![salceudover](images/scale_updown_overview.jpg)
+![Webhook](./scale_updown_overview)
 
 Now scale your application using the `oc scale` command (remembering to specify the `dc`)
 
@@ -132,9 +132,9 @@ deploymentconfig "time" scaled
 ```
 
 If you look at the web console and you will see that there are 3 instances running now
-![sclaedw3](images/scale_updown_overview_scaled.jpg)
+![Webhook](./scale_updown_overview_scaled)
 
-**Note** that you can also scale up and down from the web console by going to the project overview page and clicking twice on ![image](images/scale_up.jpg) right next to the pod count circle to add 2 more pods.
+**Note** that you can also scale up and down from the web console by going to the project overview page and clicking twice on ![Webhook](./scale_up) right next to the pod count circle to add 2 more pods.
 
 
 
@@ -167,7 +167,7 @@ Scaling down is the same procedure as scaling up. Use the `oc scale` command on 
 oc scale --replicas=1 dc/time
 deploymentconfig "time" scaled
 ```
-Alternately, you can go to project overview page and click on ![image](images/scale_down.jpg) twice to remove 2 running pods.
+Alternately, you can go to project overview page and click on ![Webhook](./scale_down) twice to remove 2 running pods.
 
 Congratulations!! In this exercise you have learned about scaling and how to scale up/down your application on OpenShift!
 
