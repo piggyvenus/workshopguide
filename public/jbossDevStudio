@@ -107,4 +107,4 @@ routes, etc under OpenShift Explorer
 
 
 </xmp>
-<script src="./strapdown.js"></script>
+<script src="http://training.runcloudrun.com/v/0.2/strapdown.js"></script>
