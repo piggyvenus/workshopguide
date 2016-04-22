@@ -53,8 +53,8 @@ app.get('/bluegreen', function(req,res){
 	res.sendfile(public_dir + 'bluegreen.html')
 });
 
-app.get('/scmWebHooks', function(req,res){
-	res.sendfile(public_dir + 'scmWebHooks.html')
+app.get('/scmWebHook', function(req,res){
+	res.sendfile(public_dir + 'scmWebHook.html')
 });
 
 app.get('/rollbackApp', function(req,res){
