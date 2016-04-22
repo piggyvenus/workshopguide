@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<title>OpenShift 3 Workshop</title>
+
+<xmp style="display:none;">
+
+#** Lab 13: Using Jboss Development Studio**
+admin**Installing the JBoss Developer Studio Plugin**
+
+**Step 1: Download and install JBoss Studio**
+
+- Download the latest JBoss Developer studio from:
+http://www.jboss.org/products/devstudio/download
+
+![Webhook](./jboss_install_1)
+
+![Webhook](./jboss_install_2)
+
+**Step 2: Install OpenShift Plugin**
+
+- Open JBoss Studio.
+
+- Navigate to JBoss Central and select "Software/Update" tab
+
+- Look for the OpenShift v3 tools
+
+- Select it and install. Accept license agreement. It may warn you about unsigned content. Ignore it.
+
+![Webhook](./jboss_install_3)
+
+![Webhook](./jboss_install_4)
+
+**Step 3: Configure OpenShift v3 Plugin**
+
+- At the bottom of your IDE, expand the OpenShift explorer panel.
+
+- Add a new connection.
+
+- From the “Server type” dropdown box, select OpenShift 3.
+
+- For the Server URL, ensure you add port 8443 if you are not using the default 
+  server FQDN.
+
+- Select the authentication mechanism.
+
+- Provide the username and password.
+
+- Click Finish
+
+![Webhook](./jboss_install_5)
+
+![Webhook](./jboss_install_6)
+
+![Webhook](./jboss_install_6a)
+
+
+**Step 4: Verify your connection**
+
+- At this point, you will be able to see any existing projects for which
+the provider username and password have access to.
+
+- You can also see a number of types, such as deployment configurations, services
+routes, etc under OpenShift Explorer
+
+![Webhook](./jboss_install_7)
+
+**Step 5: Create a OpenShift Application**
+
+- Go to JBoss Studio, right click on the OpenShift connection --> select New --> select project
+- Enter javatest as the new of the project.
+- From the JBoss Studio menu, Select File --> New --> OpenShift Application 
+- Make sure the information is correct and enter username and password 
+- Click next.
+
+![Webhook](./jboss_install8)
+
+- Select the newly created project from the project dropdown list
+- Select the eap64-basic-s2i template from the list
+- Click Next
+
+![Webhook](./jboss_install_9)
+
+- Select Parameters listed below and enter the values
+	- APPLICATION_DOMAIN:mytestapp-javatest-Username.apps.osecloud.com 
+	- APPLICATION_NAME:mytestapp
+	- CONTEXT_DIR:<empty>
+	- SOURCE_REPOSITORY_REF: <empty> 
+	- SOURCE_REPOSITORY_URL:  https://github.com/RedHatWorkshops/kitchensink
+- Then, click edit to update the values of the parameters.
+- Click ok after update each parameter.
+- Click Next after updating all the parameters
+- Click Finish.
+
+![Webhook](./jboss_install_10)
+
+- Click OK
+
+![Webhook](./jboss_install_11)
+
+- Click Finish
+
+![Webhook](./jboss_install_12)
+
+- Review the status under OpenShift Explorer
+
+![Webhook](./jboss_install_13)
+
+
+</xmp>
+<script src="./strapdown.js"></script>
