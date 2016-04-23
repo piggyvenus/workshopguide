@@ -93,7 +93,7 @@ oc get service
 **Remember** to substitute the username
 
 ```
-oc expose service blue --hostname=bluegreen.UserName.apps.sc.workshop.chan-shanna.com --name=bluegreen
+oc expose service blue --hostname=bluegreen.UserName.apps.devday.sc.osecloud.com --name=bluegreen
 ```
 
 **Step 8: Test the application**
@@ -171,7 +171,7 @@ metadata:
   selfLink: /oapi/v1/namespaces/bluegreen-userxx/routes/bluegreen
   uid: 80829b59-a8e0-11e5-be21-fa163ec58dad
 spec:
-  host: bluegreen.userxx.apps.sc.workshop.chan-shanna.com
+  host: bluegreen.userxx.apps.devday.sc.osecloud.com
   port:
     targetPort: "8080"
   to:

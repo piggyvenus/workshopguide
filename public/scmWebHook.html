@@ -99,14 +99,14 @@ scm-web-hooks   172.30.214.33   <none>        8080/TCP   app=scm-web-hooks,deplo
 
 **Remember** to substitute the UserName
 
-oc expose service scm-web-hooks --hostname=scm-web-hooks.UserName.apps.osecloud.com
-NAME            HOST/PORT                                  PATH      SERVICE         LABELS              TLS TERMINATION
-scm-web-hooks   scm-web-hooks.UserName.apps.osecloud.com             scm-web-hooks   app=scm-web-hooks   
+oc expose service scm-web-hooks --hostname=scm-web-hooks.UserName.apps.devday.sc.osecloud.com
+NAME            HOST/PORT                                               PATH       SERVICE         LABELS              TLS TERMINATION
+scm-web-hooks   scm-web-hooks.UserName.apps.devday.sc.osecloud.com      scm-web-hooks   app=scm-web-hooks   
 ```
 **Step 5: Test the application**
 
 - Use the newly created route, in the above case
-scm-web-hooks.aquiroga.apps.osecloud.com and paste it in your browser.
+scm-web-hooks.aquiroga.apps.devday.sc.osecloud.com and paste it in your browser.
 
 - You should see:
 

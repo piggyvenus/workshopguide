@@ -81,7 +81,7 @@ routes, etc under OpenShift Explorer
 ![Webhook](./jboss_install_9)
 
 - Select Parameters listed below and enter the values
-	- APPLICATION_DOMAIN:mytestapp-javatest-Username.apps.osecloud.com 
+	- APPLICATION_DOMAIN:mytestapp-javatest-Username.apps.devday.sc.osecloud.com
 	- APPLICATION_NAME:mytestapp
 	- CONTEXT_DIR:<empty>
 	- SOURCE_REPOSITORY_REF: <empty> 

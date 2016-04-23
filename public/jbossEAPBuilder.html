@@ -241,8 +241,8 @@ route "ks" exposed
 
 ```
 $ oc get routes
-NAME  HOST/PORT                                PATH  SERVICE   LABELS    INSECURE POLICY   TLS TERMINATION
-ks    ks-myjbossapp-Username.apps.osecloud.com   ks    app=ks        
+NAME  HOST/PORT                                            PATH  SERVICE   LABELS    INSECURE POLICY   TLS TERMINATION
+ks    ks-myjbossapp-Username.apps.devday.sc.osecloud.com   ks    app=ks        
 ```
 
 **Step 6: Run the application**
@@ -251,7 +251,7 @@ Now run the application by using the route you provided in the previous step. Yo
 
 ````
 
-$ curl ks-myjbossapp-UserName.apps.osecloud.com
+$ curl ks-myjbossapp-UserName.apps.devday.sc.osecloud.com
 
  <!-- Plain HTML page that kicks us into the app -->
 <html>
@@ -260,7 +260,7 @@ $ curl ks-myjbossapp-UserName.apps.osecloud.com
 </head>
 </html>
 ````
-Go to https://ks-myjbossapp-Username.apps.osecloud.com via your browser. Please replace your username with yours.
+Go to https://ks-myjbossapp-Username.apps.devday.sc.osecloud.com via your browser. Please replace your username with yours.
 
 ![Webhook](./ks-myjbossapp)
 

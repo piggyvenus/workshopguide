@@ -75,12 +75,12 @@ However, there is no route for this application yet. So you cannot access this a
 
 Now add a route to the service with the following command. `oc expose` command will allow you to expose your service to the world so that you can access it from the browser. 
 
-**Note**: I am using a domain name of `apps.osecloud.com`. Ask the instructor on the domain name suffix for your setup an change it. 
+**Note**: I am using a domain name of `apps.devday.sc.osecloud.com`. Ask the instructor on the domain name suffix for your setup an change it. 
 
 ````
-$ oc expose service welcome --name=welcome --hostname=welcome.UserName.apps.osecloud.com
+$ oc expose service welcome --name=welcome --hostname=welcome.UserName.apps.devday.sc.osecloud.com
 NAME      HOST/PORT                     PATH      SERVICE   LABELS
-welcome   welcome.UserName.apps.osecloud.com             welcome   
+welcome   welcome.UserName.apps.devday.sc.osecloud.com             welcome   
 ````
 
 **Step 4: Try your application**
@@ -88,7 +88,7 @@ welcome   welcome.UserName.apps.osecloud.com             welcome
 Access the application: Now access the application using curl or from the browser and see the result
 
 ````
-$ curl http://welcome.UserName.apps.osecloud.com
+$ curl http://welcome.UserName.apps.devday.sc.osecloud.com
 Welcome to OpenShift Enterprise v3.0!!
 ````
 
@@ -109,7 +109,7 @@ welcome   ConfigChange, ImageChange   1
 CONTROLLER   CONTAINER(S)   IMAGE(S)                      SELECTOR                                        REPLICAS
 welcome-1    welcome        veermuchandi/welcome:latest   deployment=welcome-1,deploymentconfig=welcome   1
 NAME      HOST/PORT                     PATH      SERVICE   LABELS
-welcome   welcome.apps.osecloud.com             welcome   
+welcome   welcome.apps.devday.sc.osecloud.com             welcome   
 NAME      LABELS    SELECTOR                   IP(S)           PORT(S)
 welcome   <none>    deploymentconfig=welcome   172.30.155.37   80/TCP
 NAME              READY     REASON    RESTARTS   AGE
