@@ -26,6 +26,7 @@ Scroll down to Databases session, click `See all` to see the list of all the ava
 
 ![Webhook](./mysql_ephemeral_template)
 
+
 You will be taken to the mysql ephemeral creation screen. Click edit parameters and edit the values. I am using the values as
 
 * Database Service Name: mysql
@@ -42,7 +43,7 @@ Click the `Create` button.
 ![Webhook](./mysql_ephemeral_creation)
 
 Click `Continue to overview`. 
-![Webhook](./mysql_pod_on_proj_details)
+![Webhook](./mysql_pod_on_proj_detail)
 
 It will take you back to the project overview page and soon you will see an image of a running pod.
 ![Webhook](./mysql_pod_on_proj_overview)
@@ -50,13 +51,13 @@ It will take you back to the project overview page and soon you will see an imag
 If pod does not show running, Click `Browse` and select `Deployment`, do the following:
 
 - Click onto `mysql` deployments config
-- Click on the icon ![Webhook](./dc_edit)
+- Click on the icon ![Webhook](./dc_edit.jpg)
 - Select Edit from the pop-up screen ![Webhook](./dc_edit_raw)
 - Search for readinessProbe: and remove the single quotes around $MYSQL_PASSWORD
 - Click save
 - Click `Browse` and select `Pods`
 - Click onto the pod name
-- Click on the icon ![Webhook](./dc_edit) and select delete
+- Click on the icon ![Webhook](./dc_edit.jpg) and select delete
 
 
 
@@ -137,7 +138,7 @@ To add a frontend again press on `Add to Project` to spin up a frontend applicat
 You will be taken to the screen where you can edit the template defaults like before. Enter the following values for each parameters:
 
 * Source control repository URL: https://github.com/VeerMuchandi/dbtest.git
-* Application domain name: dbtest.UserName.apps.devday.sc.osecloud.com **Remember** to substitute username
+* Application domain name: dbtest.UserName.apps.osecloud.com **Remember** to substitute username
 * Database Service Name: mysql (this should match the service name for database created earlier)
 * Database Engine: mysql
 * Database Name: sample
@@ -152,11 +153,13 @@ Click `Create` to add this frontend application to talk to the database.
 
 ![Webhook](./cakephp_confirm)
 
+
 Click `Continue to overview`
 
 You will be taken back to the Project Overview page and you will start seeing that a new service is now available. 
 
 ![Webhook](./dbtest_service)
+
 
 You will also notice that a build starts running very soon. Once the build completes, the application image created from the source code will be uploaded to the docker repository. 
 
@@ -189,6 +192,8 @@ First we deployed the MySQL database. We added data manually by getting into the
 Then we added the frontend code that was built using the OpenShift S2I process.
 You configured this frontend application to access the database using a service, in this case, the "mysql" service.
 The frontend is made accessible using a route for which you gave a URL.
+
+
 
 </xmp>
 <script src="http://training.runcloudrun.com/v/0.2/strapdown.js"></script>
