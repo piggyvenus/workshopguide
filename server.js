@@ -210,7 +210,7 @@ app.get('/cakephp_confirm', function(req,res){
 	res.sendfile(images_dir + 'cakephp_confirm.jpeg')
 });
 
-app.get('/dbtest_service.jpeg', function(req,res){
+app.get('/dbtest_service', function(req,res){
 	res.sendfile(images_dir + 'dbtest_service.jpeg')
 });
 
