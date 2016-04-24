@@ -263,4 +263,8 @@ app.get('/terminal_view', function(req,res){
 	res.sendfile(images_dir + 'terminal_view.jpg')
 });
 
+app.get('/cakephp_template', function(req,res){
+	res.sendfile(images_dir + 'cakephp_template.jpeg')
+});
+
 app.listen(8080, function() { console.log('listening')});
