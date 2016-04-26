@@ -58,7 +58,19 @@ for subsequent commands.
 To login to a remote server use:
 
 ```
-oc login <hostname>:<port>
+#set the environment variables for proxy. 
+# for Windows
+set HTTP_PROXY=http://USER:PASSWORD@IPADDR:PORT
+set HTTPS_PROXY=https://USER:PASSWORD@IPADDR:PORT
+
+# for MAC or Linux
+export HTTP_PROXY=http://USER:PASSWORD@IPADDR:PORT
+export HTTPS_PROXY=https://USER:PASSWORD@IPADDR:PORT
+
+
+oc login --insecure-skip-tls-verify=true https://openshift.devday.sc.osecloud.com:8443/  -u <username>
+
+
 ```
 </xmp>
 

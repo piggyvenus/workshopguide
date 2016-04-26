@@ -171,7 +171,7 @@ app.get('/github_show_url', function(req,res){
 });
 
 app.get('/github_add_webhook', function(req,res){
-	res.sendfile(images_dir + 'github_add_webhook.jpg')
+	res.sendfile(images_dir + 'github_add_webhook.png')
 });
 
 app.get('/application_create_screen', function(req,res){
@@ -266,5 +266,10 @@ app.get('/terminal_view', function(req,res){
 app.get('/cakephp_template', function(req,res){
 	res.sendfile(images_dir + 'cakephp_template.jpeg')
 });
+
+app.get('/cakephp_details', function(req,res){
+	res.sendfile(images_dir + 'cakephp_details.jpg')
+});
+
 
 app.listen(8080, function() { console.log('listening')});
